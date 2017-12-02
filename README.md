@@ -10,7 +10,7 @@ To do so, we need to calibrate the camera using a chessboard. OpenCV includes fu
 <center>
 <figure>
 <img src="saved_figures/chess_corners.png" alt="Finding chessboard corners"/>
-<figcaption>Fig1. - The coordinates of the corners are stored in a list.</figcaption>
+<figcaption>The coordinates of the corners are stored in a list.</figcaption>
 </figure>
 </center>
 
@@ -19,7 +19,7 @@ The coordinates are passed to `cv2.undistort()` which returns the matrix transfo
 <center>
 <figure>
 <img src="saved_figures/undistorted_chess.png" alt="Correcting distortion"/>
-<figcaption>Fig2. - Applying the the linear matrix transform to correct distortion.</figcaption>
+<figcaption>Applying the the linear matrix transform to correct distortion.</figcaption>
 </figure>
 </center>
 
@@ -27,42 +27,6 @@ The coordinates are passed to `cv2.undistort()` which returns the matrix transfo
 ###  Gradient and Color Thresholding
 
 When we are using very traditional computer vision and machine learning techniques, it's often the case that binary (black and white / zero and one) matrices/images are the best to work with. This is not the same as *grayscale* where there is a single color channel with pixel values that exist in the range `[0, 255]`. Rather, we must apply some *filters* to a grayscale image to push those values ***to either 0 or 1*** (i.e. 255).
-
-I chose to use an ensemble method of filters. Each pixel was evaluated to meet **either** a threshold of **Sobel gradients in the X *and* Y direction** or a threshold of **gradient magnitude *and* direction**. This ensemble filter was combined `bitwise_or` with a threshold filter of the **Saturation** channel from the **HSV color space**. My final pipeline looks like this:
-
-```python
-def binary_pipeline(img):
-
-    img_copy = cv.GaussianBlur(img, (3, 3), 0)
-    #img_copy = np.copy(img)
-
-    # color channels
-    s_binary = hls_select(img_copy, sthresh=(140, 255), lthresh=(120, 255))
-    #red_binary = red_select(img_copy, thresh=(200,255))
-
-    # Sobel x
-    x_binary = abs_sobel_thresh(img_copy,thresh=(25, 200))
-    y_binary = abs_sobel_thresh(img_copy,thresh=(25, 200), orient='y')
-    xy = cv.bitwise_and(x_binary, y_binary)
-
-    #magnitude & direction
-    mag_binary = mag_threshold(img_copy, sobel_kernel=3, thresh=(30,100))
-    dir_binary = dir_threshold(img_copy, sobel_kernel=3, thresh=(0.8, 1.2))
-
-    # Stack each channel
-    gradient = np.zeros_like(s_binary)
-    gradient[((x_binary == 1) & (y_binary == 1)) | ((mag_binary == 1) & (dir_binary == 1))] = 1
-    final_binary = cv.bitwise_or(s_binary, gradient)
-
-    return final_binary
-  ```
-
-  <center>
-  <figure>
-  <img src="saved_figures/combined_filters.png" alt="Combined filters"/>
-  <figcaption>Fig3. - An binary image produced by an ensemble of filters.</figcaption>
-  </figure>
-  </center>
 
 ---
 ### Perspective Transforming
@@ -72,7 +36,7 @@ Now that we have the lanes in a nice, easy-to-work-with binary form, we need to 
 <center>
 <figure>
 <img src="saved_figures/perspective_transform.png" alt="birds-eye view"/>
-<figcaption>Fig4. - A birds-eye view of the lane.</figcaption>
+<figcaption>A birds-eye view of the lane.</figcaption>
 </figure>
 </center>
 ---
@@ -145,7 +109,7 @@ Now it's time to apply the pipeline to a video! You can check out some footage f
 </center>
 
 ---
-### Reflections
+### Summary
 This project is mostly a showcase of the power of being explicit. Often times we think of deep learning as a cure-all, but there are situations where explicit computer vision is much better and traditional machine learning is much faster. This project has a very fast backend, but the drawing of bounding boxes, radius, etc (the image editing) is very slow. I can imagine using a pipeline like this to send information to a robotics system in realtime, but not for displaying a HUD to a driver/passenger. Further, this pipeline is not robust enough to handle the driving conditions that it needs to in order to be useable:
   1. Going uphill or downhill
   2. Rain/snow/etc
