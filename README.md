@@ -91,19 +91,8 @@ Polynomials are great because they are pure mathematics! We can use the formula 
 </center>
 
 ---
-### Results
-
-Now it's time to apply the pipeline to a video! You can check out some footage from [California](https://www.youtube.com/watch?v=BLajapkJXVI) or from my hometown of [Chicago!](https://www.youtube.com/watch?v=eFFw32FjUxc)
-
-<center>
-<figure>
-<img src="saved_figures/chicago_thumbnail.jpg" alt="Chicago's Lakeshore Drive"/>
-</figure>
-</center>
-
----
 ### Summary
-This project is mostly a showcase of the power of being explicit. Often times we think of deep learning as a cure-all, but there are situations where explicit computer vision is much better and traditional machine learning is much faster. This project has a very fast backend, but the drawing of bounding boxes, radius, etc (the image editing) is very slow. I can imagine using a pipeline like this to send information to a robotics system in realtime, but not for displaying a HUD to a driver/passenger. Further, this pipeline is not robust enough to handle the driving conditions that it needs to in order to be useable:
+This project is mostly a showcase of the power of being explicit. Often times we think of deep learning as a cure-all, but there are situations where explicit computer vision is much better and traditional machine learning is much faster.  Further, this pipeline is not robust enough to handle the driving conditions that it needs to in order to be useable:
   1. Going uphill or downhill
   2. Rain/snow/etc
   3. Poor lighting conditions
