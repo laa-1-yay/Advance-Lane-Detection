@@ -44,13 +44,6 @@ Now that we have the lanes in a nice, easy-to-work-with binary form, we need to 
 
 The Destination image above lends itself nicely to a very simple way to find the lane lines - a histogram! By keeping track of the greatest number of white/one values in a given column, we can track where the lane is.
 
-<center>
-<figure>
-<img src="saved_figures/lane_histogram.png" alt="Lane histogram"/>
-<figcaption>Fig5. - A histogram of white pixels.</figcaption>
-</figure>
-</center>
-
  The preliminary search works like this:
 
   1. Create a search window on the bottom of the image whose height is 1/9 of the image's height.
@@ -63,7 +56,7 @@ The Destination image above lends itself nicely to a very simple way to find the
 <center>
 <figure>
 <img src="saved_figures/01_window_search.png" alt="Initial search"/>
-<figcaption>Fig6. - Tracking lanes across search windows.</figcaption>
+<figcaption> Tracking lanes across search windows.</figcaption>
 </figure>
 </center>
 
@@ -72,7 +65,7 @@ Once we have the polynomial of the line that best fits the lane, we can optimize
 <center>
 <figure>
 <img src="saved_figures/02_updated_search_window.png" alt="Updated search"/>
-<figcaption>Fig7. - Local area search for lane lines.</figcaption>
+<figcaption>Local area search for lane lines.</figcaption>
 </figure>
 </center>
 
@@ -81,7 +74,7 @@ Then we can pass back an overlay to the original frame of the area between the c
 <center>
 <figure>
 <img src="saved_figures/lane_polygon.png" alt="Lane overlay"/>
-<figcaption>Fig8. - Dash cam footage with lane overlay.</figcaption>
+<figcaption> Dash cam footage with lane overlay.</figcaption>
 </figure>
 </center>
 
@@ -93,7 +86,7 @@ Polynomials are great because they are pure mathematics! We can use the formula 
 <center>
 <figure>
 <img src="output_images/lane_straight_lines1.jpg" alt="Road features"/>
-<figcaption>Fig9. - Radius of curvature and vehicle offset in meters.</figcaption>
+<figcaption>Radius of curvature and vehicle offset in meters.</figcaption>
 </figure>
 </center>
 
